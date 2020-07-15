@@ -1,7 +1,20 @@
 #!/bin/bash
 #
 # Automate E-Commerce Application Deployment
-# Author: Bharath Kumar
+# AUTHOR: Bharath Kumar
+#
+# LAMP STACK COMPONENTS
+# -------------------------
+# Operating System  : CentOS
+# Apache Web server : Apache httpd
+# Database          : MariaDB
+# Scripting Language: PHP
+# -------------------------
+# Database Name     : ecomdb
+# Database Username : bharath
+# Database Password : ecompassword
+# -------------------------
+
 
 #######################################
 # Prints colored text in the terminal.
