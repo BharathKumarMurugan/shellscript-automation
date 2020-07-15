@@ -82,6 +82,7 @@ print_color "green" "Installing FirewallD..."
 sudo yum install -y firewalld
 sudo service firewalld start
 sudo systemctl enable firewalld
+sleep 5
 
 check_service_active firewalld
 
@@ -90,6 +91,7 @@ print_color "green" "Installing MariaDB..."
 sudo yum install -y mariadb-server
 sudo service mariadb start
 sudo systemctl enable mariadb
+sleep 5
 
 check_service_active mariadb
 
