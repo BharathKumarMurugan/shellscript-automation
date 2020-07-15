@@ -55,7 +55,7 @@ function check_service_active() {
 function is_firewalld_port_configured() {
     firewalld_port=$(sudo firewall-cmd --list-all --zone=public | grep ports)
 
-    if [[ firewalld_port = *$1* ]]; then
+    if [[ $firewalld_port = *$1* ]]; then
         print_color "green" "Port $1 is configured"
     else
         print_color "red" "Port $1 is not configured"
@@ -103,10 +103,10 @@ is_firewalld_port_configured 3306
 # Creating a DB USER
 print_color "green" "Creating a DB USER..."
 cat >configure-db.sql <<-EOF
-MariaDB > CREATE DATABASE ecomdb;
-MariaDB > CREATE USER 'ecomuser'@'localhost' IDENTIFIED BY 'ecompassword';
-MariaDB > GRANT ALL PRIVILEGES ON *.* TO 'ecomuser'@'localhost';
-MariaDB > FLUSH PRIVILEGES;
+CREATE DATABASE IF NOT EXISTS ecomdb;
+CREATE USER 'bharath'@'localhost' IDENTIFIED BY 'ecompassword';
+GRANT ALL PRIVILEGES ON *.* TO 'bharath'@'localhost';
+FLUSH PRIVILEGES;
 EOF
 
 sudo mysql <configure-db.sql
@@ -120,7 +120,7 @@ CREATE TABLE products (id mediumint(8) unsigned NOT NULL auto_increment,Name var
 INSERT INTO products (Name,Price,ImageUrl) VALUES ("Laptop","100","c-1.png"),("Drone","200","c-2.png"),("VR","300","c-3.png"),("Tablet","50","c-5.png"),("Watch","90","c-6.png"),("Phone Covers","20","c-7.png"),("Phone","80","c-8.png"),("Laptop","150","c-4.png");
 EOF
 
-mysql <db-load-script.sql
+sudo mysql <db-load-script.sql
 
 mysql_db_result=$(sudo mysql -e "use ecomdb; SELECT * FROM products;")
 
@@ -149,7 +149,7 @@ check_service_active httpd
 
 # Clone the repository
 sudo yum install -y git
-git clone https://github.com/kodekloudhub/learning-app-ecommerce.git /var/www/html/
+sudo git clone https://github.com/BharathKumarMurugan/sample-php-ecomm-app.git /var/www/html/
 
 # Update index.php file that connects to the database
 sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
